@@ -1,5 +1,5 @@
-@extends('layouts.app')
+@extends('layouts.customers')
 @section('content')
-<h1>Ìºç INSYS INTERNATIONAL</h1>
+<h1>ÔøΩÔøΩÔøΩ INSYS INTERNATIONAL</h1>
 <p>Welcome to INSYS International page.</p>
 @endsection

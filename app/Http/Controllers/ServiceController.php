@@ -19,7 +19,7 @@ class ServiceController extends Controller
         return view('services.show', compact('service'));
     }
 
-        public function solarsys()
+    public function solarsys()
     {
         return view('services.solarsys');
     }
@@ -42,5 +42,9 @@ class ServiceController extends Controller
     public function insys()
     {
         return view('services.insys');
+    }
+    public function sys()
+    {
+        return view('services.sys');
     }
 }

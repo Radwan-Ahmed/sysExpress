@@ -122,12 +122,11 @@
                         Services
                     </a>
                     <ul class="dropdown-menu shadow-lg border-0 rounded-3 p-2" aria-labelledby="productsDropdown">
-                        <li><a class="dropdown-item {{ request()->is('services/solarsys-energy') ? 'active' : '' }}" href="{{ url('/services/solarsys-energy') }}">🌞 SOLARSYS ENERGY</a></li>
-                        <li><a class="dropdown-item {{ request()->is('services/agrosys-farm-fresh') ? 'active' : '' }}" href="{{ url('/services/agrosys-farm-fresh') }}">🌾 AGROSYS FARM FRESH</a></li>
-                        <li><a class="dropdown-item {{ request()->is('services/gspv-new-energy-bd') ? 'active' : '' }}" href="{{ url('/services/gspv-new-energy-bd') }}">⚡ GSPV NEW ENERGY BD</a></li>
-                        <li><a class="dropdown-item {{ request()->is('services/sys-express') ? 'active' : '' }}" href="{{ url('/services/sys-express') }}">🚚 SYS Express</a></li>
-                        <li><a class="dropdown-item {{ request()->is('services/insys-international') ? 'active' : '' }}" href="{{ url('/services/insys-international') }}">🌍 INSYS INTERNATIONAL</a></li>
-                    </ul>
+                        <li><a class="dropdown-item {{ request()->is('services/solarsys') ? 'active' : '' }}" href="{{ url('/services/solarsys') }}" target="_blank">🌞 SOLARSYS ENERGY</a></li>
+                       <li><a class="dropdown-item {{ request()->is('services/sys') ? 'active' : '' }}" href="{{ url('/services/sys') }}" target="_blank">🚚 SYS Express</a></li>
+                         <li><a class="dropdown-item {{ request()->is('services/agrosys') ? 'active' : '' }}" href="{{ url('/services/agrosys') }}" target="_blank">🌾 AGROSYS FARM FRESH</a></li>
+                          <li><a class="dropdown-item {{ request()->is('services/gspv') ? 'active' : '' }}" href="{{ url('/services/gspv') }}" target="_blank">⚡ GSPV NEW ENERGY BD</a></li>
+                        </ul>
                 </li>
 
                 <li class="nav-item mx-1">
@@ -182,12 +181,14 @@
                 <h5 class="fw-bold">Quick navigation</h5>
                 <ul class="list-unstyled">
 
-                    <li><a href="#" class="text-white text-decoration-none">> 🌞 SOLARSYS ENERGY DISTRIBUTION LTD.</a></li>
-                    <li><a href="#" class="text-white text-decoration-none">> 🌾 AGROSYS FARM FRESH</a></li>
-                    <li><a href="#" class="text-white text-decoration-none">> ⚡ GSPV NEW ENERGY BD</a></li>
-                    <li><a href="#" class="text-white text-decoration-none">> 🚚 SYS Express</a></li>
-                    <li><a href="#" class="text-white text-decoration-none">> 🌍 INSYS INTERNATIONAL</a></li>
-                </ul>
+                    <li><a class=" text-white text-decoration-none {{ request()->is('services/solarsys') }}" href="{{ url('/services/solarsys') }}" target="_blank">> 🌞 SOLARSYS ENERGY DISTRIBUTION LTD.</a></li>
+                   <li><a class=" text-white text-decoration-none {{ request()->is('services/gspv') }}" href="{{ url('/services/gspv') }}" target="_blank">>⚡ GSPV NEW ENERGY BD</a></li>
+                    <li><a class=" text-white text-decoration-none {{ request()->is('services/sys') }}" href="{{ url('/services/sys') }}" target="_blank">>🚚 SYS Express</a></li>
+                     <li><a class=" text-white text-decoration-none {{ request()->is('services/agrosys') }}" href="{{ url('/services/agrosys') }}" target="_blank">>🌾 AGROSYS FARM FRESH</a></li>
+
+
+
+
             </div>
 
             <!-- Contact Us -->

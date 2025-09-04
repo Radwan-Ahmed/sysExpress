@@ -1,5 +1,5 @@
-@extends('layouts.app')
+@extends('layouts.solarsys')
 @section('content')
-<h1>í¼ž SOLARSYS ENERGY</h1>
+<h1>ï¿½ï¿½ï¿½ SOLARSYS ENERGY</h1>
 <p>Welcome to Solarsys Energy page.</p>
 @endsection

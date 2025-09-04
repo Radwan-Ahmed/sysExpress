@@ -8,6 +8,7 @@ use App\Http\Controllers\AboutController;
 // routes/web.php
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ServiceController;
 
 Route::resource('customers', CustomerController::class);
 
@@ -33,12 +34,12 @@ Route::post('products/store-multiple', [ProductController::class, 'store-multipl
 
 
 
-Route::prefix('products')->group(function () {
-    Route::get('/solarsys-energy', [ProductController::class, 'solarsysEnergy'])->name('products.solarsys');
-    Route::get('/agrosys-farm-fresh', [ProductController::class, 'agrosysFarmFresh'])->name('products.agrosys');
-    Route::get('/gspv-new-energy-bd', [ProductController::class, 'gspvNewEnergyBd'])->name('products.gspv');
-    Route::get('/sys-express', [ProductController::class, 'sysExpress'])->name('products.sysExpress');
-    Route::get('/insys-international', [ProductController::class, 'insysInternational'])->name('products.insys');
+Route::prefix('services')->group(function () {
+    Route::get('/solarsys', [ServiceController::class, 'solarsys'])->name('services.solarsys');
+    Route::get('/agrosys', [ServiceController::class, 'agrosys'])->name('services.agrosys');
+    Route::get('/gspv', [ServiceController::class, 'gspv'])->name('services.gspv');
+    Route::get('/sys', [ServiceController::class, 'sys'])->name('services.sys');
+    Route::get('/insys', [ServiceController::class, 'insys'])->name('services.insys');
 });
 
 Route::get('/contact', [ContactController::class, 'showForm'])->name('contact.show');
@@ -73,15 +74,14 @@ Route::resource('gallery', GalleryController::class)->except(['show']);
 Route::get('/user-gallery', [App\Http\Controllers\GalleryController::class, 'userGallery'])->name('user.gallery');
 
 
-use App\Http\Controllers\ServiceController;
+
 
 Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
 Route::get('/services/{slug}', [ServiceController::class, 'show'])->name('services.show');
 
-Route::prefix('services')->group(function () {
-    Route::view('/solarsys-energy', 'services.solarsys');
-    Route::view('/agrosys-farm-fresh', 'services.agrosys');
-    Route::view('/gspv-new-energy-bd', 'services.gspv');
-    Route::view('/sys-express', 'services.sys');
-    Route::view('/insys-international', 'services.insys');
+
+Route::middleware(['auth', 'isAdmin'])->group(function () {
+    Route::resource('products', ProductController::class)->except(['index', 'show']);
+    Route::resource('gallery', GalleryController::class)->except(['index', 'show']);
 });
+

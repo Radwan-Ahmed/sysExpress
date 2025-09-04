@@ -1,5 +1,5 @@
-@extends('layouts.app')
+@extends('layouts.sys')
 @section('content')
-<h1>íºš SYS EXPRESS</h1>
+<h1>ï¿½ï¿½ï¿½ SYS EXPRESS</h1>
 <p>Welcome to SYS Express page.</p>
 @endsection
