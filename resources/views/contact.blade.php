@@ -1,5 +1,6 @@
 @extends('layouts.customers')
-
+@section('title', 'Contact Us')
+<title>@yield('title', 'Contact Us')</title>
 @section('content')
 <div class="container my-5">
     <div class="row justify-content-center">

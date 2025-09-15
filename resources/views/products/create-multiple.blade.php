@@ -4,7 +4,7 @@
 <div class="container mt-5">
     <h2 class="mb-4">➕ Add Multiple Products</h2>
 
-    <form action="{{ route('products.store-multiple') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('products.storeMultiple') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         <div id="products-wrapper">

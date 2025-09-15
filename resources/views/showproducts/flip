@@ -1,0 +1,129 @@
+@extends('layouts.customers')
+
+@section('title', 'Homepage')
+
+@section('content')
+<div class="flip-card" id="flipCard" style="width:100vw; margin-left: calc(-50vw + 50%); margin-top: 0;">
+    <div class="flip-card-inner" id="flipInner">
+        <div class="flip-card-face front"></div>
+        <div class="flip-card-face back" style="transform: rotateY(180deg);"></div>
+    </div>
+    <button class="nav prev" id="prev">&#10094;</button>
+    <button class="nav next" id="next">&#10095;</button>
+    <div class="dots" id="dots"></div>
+</div>
+
+<style>
+
+.flip-card { perspective: 1000px; width: 100%; height: 500px; position: relative; cursor: pointer; }
+.flip-card-inner { width: 100%; height: 100%; transition: transform 0.3s ease-in-out; transform-style: preserve-3d; position: relative; }
+.flip-card-face { position: absolute; width: 100%; height: 100%; border-radius: 12px; overflow: hidden; backface-visibility: hidden; }
+.flip-card-face img { width: 100%; height: 500px; object-fit: cover; backface-visibility: hidden;}
+.nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(116, 114, 114, 0.5); color: white; border: none; padding: 10px 15px; cursor: pointer; font-size: 24px; border-radius: 10%; z-index: 20; user-select: none; }
+.nav:hover { background: rgba(0,0,0,0.8); }
+.prev { left: 15px; }
+.next { right: 15px; }
+.dots { position: absolute; bottom: 15px; width: 100%; text-align: center; z-index: 20; }
+.dots span { display: inline-block; height: 10px; width: 10px; margin: 0 4px; background: rgba(255,255,255,0.6); border-radius: 50%; cursor: pointer; transition: background 0.3s; }
+.dots span.active { background: #28a745; }
+@media (max-width: 768px) { .flip-card { height: 200px; }  .flip-card { height: 40vh; }}
+</style>
+
+<script>
+const images = ["images/sixport.webp","images/semaisi.webp","images/lock.webp"];
+const flipCard = document.getElementById('flipCard');
+const flipInner = document.getElementById('flipInner');
+const prevBtn = document.getElementById('prev');
+const nextBtn = document.getElementById('next');
+const dotsContainer = document.getElementById('dots');
+
+let current = 0;
+let autoFlipTimeout = null;
+let isFlipping = false;
+let hoverPaused = false;
+const AUTO_FLIP_DELAY = 3000;
+
+// Front/back faces
+const front = flipInner.querySelector('.front');
+const back = flipInner.querySelector('.back');
+front.innerHTML = `<img src="${images[0]}" alt="Image">`;
+back.innerHTML = `<img src="${images[1]}" alt="Image">`;
+
+// Dots
+images.forEach((_, i) => {
+    const dot = document.createElement('span');
+    if(i===0) dot.classList.add('active');
+    dot.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const direction = i>current?'right':'left';
+        flipTo(i,direction,true);
+    });
+    dotsContainer.appendChild(dot);
+});
+const dots = dotsContainer.querySelectorAll('span');
+
+function updateDots(){
+    dots.forEach(dot=>dot.classList.remove('active'));
+    dots[current].classList.add('active');
+}
+
+// Flip function with direction
+function flipTo(nextIndex, direction='right', manual=false){
+    if(isFlipping || nextIndex===current) return;
+    isFlipping = true;
+
+    front.innerHTML = `<img src="${images[current]}" alt="Image">`;
+    back.innerHTML = `<img src="${images[nextIndex]}" alt="Image">`;
+
+    flipInner.style.transition="transform 0.3s ease-in-out";
+    flipInner.style.transform=`rotateY(${direction==='right'?180:-180}deg)`;
+
+    setTimeout(()=>{
+        flipInner.style.transform="rotateY(0deg)";
+        current=nextIndex;
+        updateDots();
+        isFlipping=false;
+    },300);
+
+    // Only reset auto-flip if mouse is not hovering
+    if(!hoverPaused) resetAutoFlip();
+}
+
+// Manual slide functions
+function nextSlide(){ flipTo((current+1)%images.length,'right',true);}
+function prevSlide(){ flipTo((current-1+images.length)%images.length,'left',true);}
+function autoFlip(){ flipTo((current+1)%images.length,'right'); }
+
+// Auto-flip logic
+function startAutoFlip(){
+    stopAutoFlip();
+    if(!hoverPaused){
+        autoFlipTimeout = setTimeout(function loop(){
+            if(!hoverPaused) autoFlip();
+            autoFlipTimeout = setTimeout(loop,AUTO_FLIP_DELAY);
+        },AUTO_FLIP_DELAY);
+    }
+}
+function stopAutoFlip(){ clearTimeout(autoFlipTimeout); }
+function resetAutoFlip(){
+    stopAutoFlip();
+    if(!hoverPaused) startAutoFlip();
+}
+
+// Hover on card or arrows pauses auto-flip
+function onHoverEnter(){ hoverPaused=true; stopAutoFlip(); }
+function onHoverLeave(){ hoverPaused=false; startAutoFlip(); }
+
+[flipCard, prevBtn, nextBtn].forEach(el=>{
+    el.addEventListener('mouseenter',onHoverEnter);
+    el.addEventListener('mouseleave',onHoverLeave);
+});
+
+// Arrow click
+nextBtn.addEventListener('click', nextSlide);
+prevBtn.addEventListener('click', prevSlide);
+
+// Start auto-flip
+startAutoFlip();
+</script>
+@endsection

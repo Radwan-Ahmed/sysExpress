@@ -8,7 +8,7 @@
     <!-- Top Buttons -->
     <div class="d-flex justify-content-between mb-3">
         <a href="{{ route('products.create') }}" class="btn btn-primary">➕ Add New Product</a>
-    <a href="{{ route('products.createMultiple') }}" class="btn btn-info">➕➕ Add Multiple Products</a>
+    <a href="{{ route('products.create-multiple') }}" class="btn btn-info">➕➕ Add Multiple Products</a>
         <!-- Bulk Delete Form -->
  <form action="{{ route('products.bulkDelete') }}" method="POST" id="bulkDeleteForm">
     @csrf

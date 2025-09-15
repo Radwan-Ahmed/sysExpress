@@ -1,5 +1,7 @@
 
 @extends('layouts.customers')
+@section('title', 'About Us')
+<title>@yield('title', 'About Us')</title>
 
 @section('content')
 <div class="container py-5">

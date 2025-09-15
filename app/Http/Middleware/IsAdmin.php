@@ -1,16 +1,18 @@
 <?php
+
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
-class IsAdmin
+class isAdmin
 {
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->is_admin) {
+        if (auth()->check() && auth()->user()->is_admin) {
             return $next($request);
         }
-        abort(403, 'Unauthorized');
+
+        return redirect('/home')->with('error', 'You do not have admin access.');
     }
 }

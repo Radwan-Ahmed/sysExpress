@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 use App\Models\Product; // make sure this model exists
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class navProductController extends Controller
 {
     public function index()
     {
@@ -14,13 +14,9 @@ class HomeController extends Controller
         $products = Product::paginate(6);
 
         // pass to view
-        return view('home', compact('products'));
-}
-public function home()
-{
-    $products = Product::where('is_active', true)->latest()->paginate(8);
-    return view('home', compact('products'));
-}
+        return view('navProduct', compact('products'));
 
+
+    }
 
 }

@@ -1,6 +1,7 @@
 
 @extends('layouts.products')
 
+
 @section('content')
 <div class="container">
     <h1 class="mb-4">Gallery List</h1>

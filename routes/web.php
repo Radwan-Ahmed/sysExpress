@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminAuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ContactController;
@@ -9,6 +10,9 @@ use App\Http\Controllers\AboutController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\navProductController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\AdminLoginController;
 
 Route::resource('customers', CustomerController::class);
 
@@ -25,9 +29,23 @@ Route::post('products/bulk-delete', [ProductController::class, 'bulkDelete'])->n
 Route::post('gallery/bulk-delete', [GalleryController::class, 'bulkDelete'])->name('gallery.bulkDelete');
 //multi product routes
 //multi product routes
+// ------------------ PRODUCTS ------------------
+// resource (for normal CRUD)
+Route::resource('products', ProductController::class);
 
-Route::get('products/create-multiple', [ProductController::class, 'createMultiple'])->name('products.createMultiple');
-Route::post('products/store-multiple', [ProductController::class, 'store-multiple'])->name('products.store-multiple');
+// extra routes for multi create/store
+Route::get('products/create-multiple', [ProductController::class, 'createMultiple'])
+    ->name('products.create-multiple');
+
+Route::post('products/store-multiple', [ProductController::class, 'storeMultiple'])
+    ->name('products.store-multiple');
+
+
+
+
+
+Route::get('products/create-multiple', [ProductController::class, 'createMultiple'])->name('products.create-multiple');
+Route::post('/store-multiple', [ProductController::class, 'storeMultiple'])->name('products.storeMultiple');
 
 
 
@@ -49,6 +67,7 @@ Route::post('/contact', [ContactController::class, 'send'])->name('contact.send'
 
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 
+Route::get('/navProduct', [navProductController::class, 'index'])->name('navProduct');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 
@@ -57,12 +76,12 @@ Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index
 Route::get('/gallery/create', [GalleryController::class, 'create'])->name('gallery.create');
 Route::get('/gallery/create-multiple', [GalleryController::class, 'createMultiple'])->name('gallery.create-multiple');
 Route::post('/gallery', [GalleryController::class, 'store'])->name('gallery.store');
-Route::resource('gallery', GalleryController::class);
+Route::resource('gallery', controller: GalleryController::class);
 Route::get('/create-multiple', [GalleryController::class, 'createMultiple'])->name('gallery.createMultiple');
 Route::post('/store-multiple', [GalleryController::class, 'storeMultiple'])->name('gallery.storeMultiple');
 
 Route::get('/products/gallery', [GalleryController::class, 'index'])->name('gallery.index');
-Route::get('/products/gallery/create', [GalleryController::class, 'create'])->name('gallery.create');
+Route::get('/gallery/create', [GalleryController::class, 'create'])->name('gallery.create');
 Route::post('/products/gallery', [GalleryController::class, 'store'])->name('gallery.store');
 
 Route::delete('/gallery/bulk-delete', [GalleryController::class, 'bulkDelete'])->name('gallery.bulkDelete');
@@ -74,14 +93,14 @@ Route::resource('gallery', GalleryController::class)->except(['show']);
 Route::get('/user-gallery', [App\Http\Controllers\GalleryController::class, 'userGallery'])->name('user.gallery');
 
 
+// Admin-only routes
 
 
-Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
-Route::get('/services/{slug}', [ServiceController::class, 'show'])->name('services.show');
 
 
-Route::middleware(['auth', 'isAdmin'])->group(function () {
-    Route::resource('products', ProductController::class)->except(['index', 'show']);
-    Route::resource('gallery', GalleryController::class)->except(['index', 'show']);
-});
+Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('login', [LoginController::class, 'login']);
+Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
+
+Route::get('/admin/contacts', [ContactController::class, 'list'])->name('contacts.list');
